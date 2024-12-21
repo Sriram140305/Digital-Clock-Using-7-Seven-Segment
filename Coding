@@ -1,0 +1,99 @@
+#include <xc.h>
+#define _XTAL_FREQ 4000000
+#define d 5
+void main(void){
+    
+    PORTA=PORTB=0;
+    TRISA=TRISB=0;
+    ANSEL=ANSELH=0;
+    
+  int d1,d2,d3,d4,d5,d6,s;
+  
+  int segment[] = {
+    0x3F, // 0
+    0x06, // 1
+    0x5B, // 2
+    0x4F, // 3
+    0x66, // 4
+    0x6D, // 5
+    0x7D, // 6
+    0x07, // 7
+    0x7F, // 8
+    0x6F  // 9
+};
+  
+  while(1)
+  {
+      for(int h=0;h<24;h++)
+      {       
+        for(int m=0;m<60;m++)
+        {   
+            for( s=0;s<60;s++)
+            {
+          d1=s%10;
+          d2=s/10;
+          d3=m%10;
+          d4=m/10;
+          d5=h%10;
+          d6=h/10;
+          for(int n=0;n<33;n++)
+          {         
+                RB5=1;
+                RB4=1;
+                RB3=1;
+                RB2=1;
+                RB1=1;
+                RB0=0;
+                PORTA=segment[d1];
+                __delay_ms(d);
+
+                RB0=1;
+                RB2=1;
+                RB3=1;
+                RB4=1;
+                RB5=1;
+                RB1=0;
+                PORTA=segment[d2];
+                __delay_ms(d);
+                
+                    RB1=1;
+                    RB5=1;
+                    RB4=1;
+                    RB3=1;
+                    RB0=1;
+                    RB2=0;
+                    PORTA=segment[d3]+0x80;
+                    __delay_ms(d);
+
+                    RB2=1;
+                    RB1=1;
+                    RB0=1;
+                    RB2=1;
+                    RB4=1;
+                    RB3=0;
+                    PORTA=segment[d4];
+                    __delay_ms(d);
+                    
+                    RB3=1;
+                    RB2=1;
+                    RB0=1;
+                    RB1=1;
+                    RB5=1;
+                    RB4=0;
+                    PORTA=segment[d5]+0x80;
+                    __delay_ms(d);
+                
+                    RB4=1;
+                    RB2=1;
+                    RB0=1;
+                    RB1=1;
+                    RB3=1;
+                    RB5=0;
+                    PORTA=segment[d6];
+                    __delay_ms(d);
+                    }
+                    }
+          }
+      }}
+  return;
+}
